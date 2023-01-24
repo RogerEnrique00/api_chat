@@ -8,7 +8,7 @@ namespace api_chat.Models
     {
         public string cedula { get; set; }
         public string clave { get; set; }
-        public bool Validarusuario(string _Cedula, string _clave)
+        public bool Validarusuario(string _Cedula, string _clave)// valida el usuario si esta creado en la BD
         {
             cedula = _Cedula;
             clave= _clave;
