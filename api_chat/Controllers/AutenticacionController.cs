@@ -10,12 +10,18 @@ using System.Text;
 
 namespace api_chat.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AutenticacionController : ControllerBase
     {
         private readonly string secretKey;
+        private readonly string cadenaSQL;        
+
+        
 
         public AutenticacionController(IConfiguration config)
         {
+            cadenaSQL = config.GetConnectionString("CadenaSQL");
             secretKey = config.GetSection("settings").GetSection("secretKey").ToString();
         }
 

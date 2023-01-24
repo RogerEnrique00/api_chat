@@ -9,6 +9,10 @@ using System.Data.SqlClient;
 
 namespace api_chat.Controllers
 {
+    [EnableCors("ReglasCors")]
+    [Route("api/[controller]")]
+    [Authorize]
+    [ApiController]
     public class ChatController: ControllerBase
     {
         private readonly string cadenaSQL;
@@ -76,8 +80,7 @@ namespace api_chat.Controllers
                 {
                     conexion.Open();
                     var cmd = new SqlCommand("sp_guardar_Chat", conexion);
-                    cmd.Parameters.AddWithValue("mensaje", objeto.mensaje);
-                    //cmd.Parameters.AddWithValue("idUsuario", objeto.cedula);
+                    cmd.Parameters.AddWithValue("mensaje", objeto.mensaje);       
                     cmd.Parameters.AddWithValue("idUsuario", objeto.Id);
 
                     cmd.CommandType = CommandType.StoredProcedure;
