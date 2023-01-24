@@ -7,6 +7,8 @@ using System.IdentityModel.Tokens.Jwt;
 
 
 using System.Text;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace api_chat.Controllers
 {
@@ -30,8 +32,11 @@ namespace api_chat.Controllers
         public IActionResult Validar([FromBody] Usuario request)
         {
 
-            if (request.cedula== "72275222" && request.clave == "ROGER")
+            Usuario BD = new Usuario();
+
+            if (BD.Validarusuario(request.cedula, request.clave) == true)
             {
+
 
                 var keyBytes = Encoding.ASCII.GetBytes(secretKey);
                 var claims = new ClaimsIdentity();
@@ -40,7 +45,7 @@ namespace api_chat.Controllers
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = claims,
-                    Expires = DateTime.UtcNow.AddMinutes(1),
+                    Expires = DateTime.UtcNow.AddMinutes(10),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature)
                 };
 
@@ -58,8 +63,6 @@ namespace api_chat.Controllers
 
                 return StatusCode(StatusCodes.Status401Unauthorized, new { token = "" });
             }
-
-
 
         }
     }
